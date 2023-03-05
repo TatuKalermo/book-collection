@@ -1,6 +1,7 @@
 import 'dotenv/config';
 import cors from 'cors';
 import express from 'express';
+import models, { sequelize } from './models';
 
 const app = express();
 
@@ -22,6 +23,8 @@ app.delete('/', (req, res) => {
   return res.send('Received a DELETE HTTP method');
 });
 
-app.listen(process.env.PORT || 3000, () =>
-  console.log(`Example app listening on port ${process.env.PORT}!`)
-);
+sequelize.sync().then(() => {
+  app.listen(process.env.PORT || 3000, () =>
+    console.log(`Example app listening on port ${process.env.PORT}!`)
+  );
+});
