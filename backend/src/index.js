@@ -2,10 +2,14 @@ import 'dotenv/config';
 import cors from 'cors';
 import express from 'express';
 import models, { sequelize } from './models';
+import routes from './routes';
 
 const app = express();
 
 app.use(cors());
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.use(async (req, res, next) => {
   req.context = {
@@ -15,25 +19,9 @@ app.use(async (req, res, next) => {
   next();
 });
 
-// Get the whole collection
-app.get('/', async (req, res) => {
-  const library = await req.context.models.Collection.findByPk(
-    req.context.library.id
-  );
-  return res.send(library);
-});
+// * Routes * //
 
-app.post('/', (req, res) => {
-  return res.send('Received a POST HTTP method');
-});
-
-app.put('/', (req, res) => {
-  return res.send('Received a PUT HTTP method');
-});
-
-app.delete('/', (req, res) => {
-  return res.send('Received a DELETE HTTP method');
-});
+app.use('/books', routes.book);
 
 const eraseDatabaseOnSync = true;
 
@@ -49,6 +37,6 @@ sequelize.sync({ force: eraseDatabaseOnSync }).then(async () => {
   }
 
   app.listen(process.env.PORT || 3000, () =>
-    console.log(`Example app listening on port ${process.env.PORT}!`)
+    console.log(`Library app listening on port ${process.env.PORT}!`)
   );
 });
