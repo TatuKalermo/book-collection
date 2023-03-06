@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const SimpleButton = ({ id, children, onClick, disabled }) => {
+const SimpleButton = ({ id, children, disabled }) => {
   return (
-    <button id={id} type="submit" disabled={disabled} onClick={onClick}>
+    <button id={id} type="submit" disabled={disabled}>
       {children}
     </button>
   );
@@ -12,7 +12,6 @@ const SimpleButton = ({ id, children, onClick, disabled }) => {
 SimpleButton.propTypes = {
   id: PropTypes.string.isRequired,
   children: PropTypes.string.isRequired,
-  onClick: PropTypes.func.isRequired,
   disabled: PropTypes.bool,
 };
 
