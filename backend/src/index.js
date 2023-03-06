@@ -19,7 +19,7 @@ app.use(async (req, res, next) => {
   next();
 });
 
-// * Routes * //
+// Routes
 
 app.use('/books', routes.book);
 
@@ -36,7 +36,7 @@ sequelize.sync({ force: eraseDatabaseOnSync }).then(async () => {
     createCollection();
   }
 
-  app.listen(process.env.PORT || 3000, () =>
+  app.listen(process.env.PORT || 3001, () =>
     console.log(`Library app listening on port ${process.env.PORT}!`)
   );
 });
