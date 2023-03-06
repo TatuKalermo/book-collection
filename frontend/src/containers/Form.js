@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import SimpleButton from '../components/Button';
 import TextInput from '../components/TextInput';
+import PropTypes from 'prop-types';
 import './Form.css';
 
-const Form = ({ disableButtons }) => {
+const Form = ({ isDisabled }) => {
   const [inputValue, setInputValue] = useState({
     title: '',
     author: '',
@@ -75,15 +76,19 @@ const Form = ({ disableButtons }) => {
           onChange={handleChange}
         />
         <SimpleButton id="saveNew">Save New</SimpleButton>
-        <SimpleButton id="save" disabled={disableButtons}>
+        <SimpleButton id="save" disabled={isDisabled}>
           Save
         </SimpleButton>
-        <SimpleButton id="delete" disabled={disableButtons}>
+        <SimpleButton id="delete" disabled={isDisabled}>
           Delete
         </SimpleButton>
       </form>
     </div>
   );
+};
+
+Form.propTypes = {
+  isDisabled: PropTypes.bool.isRequired,
 };
 
 export default Form;

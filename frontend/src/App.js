@@ -7,8 +7,8 @@ function App() {
   const [disableButtons, setDisableButtons] = useState(false);
   return (
     <div className="App">
-      <Form disableButtons={disableButtons} />
-      <BookList />
+      <Form isDisabled={disableButtons} />
+      <BookList disableButtons={setDisableButtons} />
     </div>
   );
 }
