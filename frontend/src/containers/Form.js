@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import SimpleButton from '../components/Button';
 import TextInput from '../components/TextInput';
+import './Form.css';
 
 const Form = ({ disableButtons }) => {
   const [inputValue, setInputValue] = useState({
@@ -30,7 +31,7 @@ const Form = ({ disableButtons }) => {
     event.target.reset();
   };
 
-  // Handlers for submit buttons to know which is which
+  // Handlers for submit buttons to link ids with handler functions
 
   const handlers = {
     saveNew: handleSaveNew,
@@ -52,7 +53,7 @@ const Form = ({ disableButtons }) => {
   };
 
   return (
-    <div>
+    <div className="form-wrapper">
       <form onSubmit={submitHandler}>
         <TextInput
           label="Title"

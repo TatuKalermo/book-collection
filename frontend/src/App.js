@@ -4,7 +4,7 @@ import BookList from './containers/BookList';
 import Form from './containers/Form';
 
 function App() {
-  const [disableButtons, setDisableButtons] = useState(true);
+  const [disableButtons, setDisableButtons] = useState(false);
   return (
     <div className="App">
       <Form disableButtons={disableButtons} />
