@@ -10,6 +10,14 @@ const getCollectionModel = (sequelize, { DataTypes }) => {
     },
   });
 
+  Collection.findByName = async (collectionName) => {
+    let collection = await Collection.findOne({
+      where: { name: collectionName },
+    });
+
+    return collection;
+  };
+
   Collection.associate = (models) => {
     Collection.hasMany(models.Book, { onDelete: 'CASCADE' });
   };
