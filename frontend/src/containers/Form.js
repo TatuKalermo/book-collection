@@ -1,20 +1,46 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import SimpleButton from '../components/Button';
 import TextInput from '../components/TextInput';
 import PropTypes from 'prop-types';
-import { InputContext } from '../App';
+import { InputContext } from '../App.js';
 import './Form.css';
 
-const Form = ({ isDisabled, handleChange, handleChangeAllInputs }) => {
+const Form = ({ isDisabled, handleChange, handleChangeAll, addToList }) => {
   const { title, author, description } = useContext(InputContext);
+  const [error, setError] = useState(null);
 
   // Submit functions
 
   const handleSaveNew = (event) => {
     event.preventDefault();
     console.log('Save new', title);
-    event.target.reset();
-    handleChangeAllInputs('', '', '');
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        title: title,
+        author: author,
+        description: description,
+      }),
+    };
+    fetch('http://localhost:3001/books', requestOptions)
+      .then(async (response) => {
+        const data = await response.json();
+        if (!response.ok) {
+          const error = (data && data.message) || response.statusText;
+          return Promise.reject(error);
+        }
+        addToList({
+          title: title,
+          author: author,
+          description: description,
+        });
+        handleChangeAll('', '', '');
+      })
+      .catch((error) => {
+        setError(error.toString());
+        console.error('There was an error!', error);
+      });
   };
 
   const handleSave = (event) => {
@@ -27,7 +53,7 @@ const Form = ({ isDisabled, handleChange, handleChangeAllInputs }) => {
     event.preventDefault();
     console.log('Delete', description);
     event.target.reset();
-    handleChangeAllInputs('', '', '');
+    handleChangeAll('', '', '');
   };
 
   // Handlers for submit buttons to link ids with handler functions
@@ -39,8 +65,8 @@ const Form = ({ isDisabled, handleChange, handleChangeAllInputs }) => {
   };
 
   const submitHandler = (e) => {
-    const { id } = e.nativeEvent.submitter; // <-- access submitter id
-    handlers[id](e); // <-- proxy event to callback handler
+    const { id } = e.nativeEvent.submitter; // <-- Access submitter id
+    handlers[id](e); // <-- Proxy event to callback handler
   };
 
   return (
@@ -80,7 +106,8 @@ const Form = ({ isDisabled, handleChange, handleChangeAllInputs }) => {
 Form.propTypes = {
   isDisabled: PropTypes.bool.isRequired,
   handleChange: PropTypes.func.isRequired,
-  handleChangeAllInputs: PropTypes.func.isRequired,
+  handleChangeAll: PropTypes.func.isRequired,
+  addToList: PropTypes.func.isRequired,
 };
 
 export default Form;

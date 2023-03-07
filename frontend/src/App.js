@@ -9,14 +9,19 @@ export const InputContext = createContext({
   description: '',
 });
 
-function App() {
-  const [disableButtons, setDisableButtons] = useState(false);
+export const ListContext = createContext([]);
 
+function App() {
+  // States
+  const [disableButtons, setDisableButtons] = useState(false);
   const [inputValue, setInputValue] = useState({
     title: '',
     author: '',
     description: '',
   });
+  const [list, setList] = useState([]);
+
+  // Handler functions
   const handleChange = (e) => {
     const { name, value } = e.target;
     setInputValue((prev) => ({
@@ -32,19 +37,26 @@ function App() {
       description: desc,
     }));
   };
+  const addToList = (item) => {
+    setList([...list, item]);
+  };
   return (
     <InputContext.Provider value={inputValue}>
-      <div className="App">
-        <Form
-          isDisabled={disableButtons}
-          handleChange={handleChange}
-          handleChangeAll={handleChangeAllInputs}
-        />
-        <BookList
-          disableButtons={setDisableButtons}
-          handleBookClick={handleChangeAllInputs}
-        />
-      </div>
+      <ListContext.Provider value={list}>
+        <div className="App">
+          <Form
+            isDisabled={disableButtons}
+            handleChange={handleChange}
+            handleChangeAll={handleChangeAllInputs}
+            addToList={addToList}
+          />
+          <BookList
+            disableButtons={setDisableButtons}
+            handleBookClick={handleChangeAllInputs}
+            addToList={addToList}
+          />
+        </div>
+      </ListContext.Provider>
     </InputContext.Provider>
   );
 }
