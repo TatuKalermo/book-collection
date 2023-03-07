@@ -1,35 +1,33 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import SimpleButton from '../components/Button';
 import TextInput from '../components/TextInput';
 import PropTypes from 'prop-types';
+import { InputContext } from '../App';
 import './Form.css';
 
-const Form = ({ isDisabled }) => {
-  const [inputValue, setInputValue] = useState({
-    title: '',
-    author: '',
-    description: '',
-  });
-  const { title, author, description } = inputValue;
+const Form = ({ isDisabled, handleChange, handleChangeAllInputs }) => {
+  const { title, author, description } = useContext(InputContext);
 
   // Submit functions
 
   const handleSaveNew = (event) => {
     event.preventDefault();
-    console.log('Save new', inputValue);
+    console.log('Save new', title);
     event.target.reset();
+    handleChangeAllInputs('', '', '');
   };
 
   const handleSave = (event) => {
     event.preventDefault();
-    console.log('Save', inputValue);
+    console.log('Save', author);
     event.target.reset();
   };
 
   const handleDelete = (event) => {
     event.preventDefault();
-    console.log('Delete', inputValue);
+    console.log('Delete', description);
     event.target.reset();
+    handleChangeAllInputs('', '', '');
   };
 
   // Handlers for submit buttons to link ids with handler functions
@@ -43,14 +41,6 @@ const Form = ({ isDisabled }) => {
   const submitHandler = (e) => {
     const { id } = e.nativeEvent.submitter; // <-- access submitter id
     handlers[id](e); // <-- proxy event to callback handler
-  };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setInputValue((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
   };
 
   return (
@@ -89,6 +79,8 @@ const Form = ({ isDisabled }) => {
 
 Form.propTypes = {
   isDisabled: PropTypes.bool.isRequired,
+  handleChange: PropTypes.func.isRequired,
+  handleChangeAllInputs: PropTypes.func.isRequired,
 };
 
 export default Form;

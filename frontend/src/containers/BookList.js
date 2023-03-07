@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import './BookList.css';
 
-const BookList = ({ disableButtons }) => {
+const BookList = ({ disableButtons, handleBookClick }) => {
   const [list, setList] = useState([]);
   const [errorState, setErrorState] = useState(null);
 
@@ -14,7 +14,7 @@ const BookList = ({ disableButtons }) => {
           const error = (data && data.message) || response.statusText;
           return Promise.reject(error);
         }
-        console.log(data);
+        setList(data);
       })
       .catch((error) => {
         setErrorState(error.toString());
@@ -22,18 +22,33 @@ const BookList = ({ disableButtons }) => {
       });
   }, []);
 
+  const handleClick = (e) => {
+    console.log(e.target);
+    // handleBookClick()
+  };
+
   return (
     <div className="book-list">
-      <ul>
-        <li>hei</li>
-        <li>hei</li>
-      </ul>
+      {!errorState ? (
+        <ul>
+          {list.map((book) => {
+            return (
+              <li key={book.id} onClick={() => handleClick}>
+                {book}
+              </li>
+            );
+          })}
+        </ul>
+      ) : (
+        <p>{errorState}</p>
+      )}
     </div>
   );
 };
 
 BookList.propTypes = {
   disableButtons: PropTypes.func.isRequired,
+  handleBookClick: PropTypes.func.isRequired,
 };
 
 export default BookList;
