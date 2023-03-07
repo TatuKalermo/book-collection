@@ -1,39 +1,28 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import './BookList.css';
 import { ListContext } from '../App';
 
-const BookList = ({ disableButtons, handleBookClick, addToList }) => {
-  const [errorState, setErrorState] = useState(null);
+const BookList = ({ disableButtons, handleBookClick, errorState }) => {
   const list = useContext(ListContext);
 
-  useEffect(() => {
-    fetch('http://localhost:3001/books')
-      .then(async (response) => {
-        const data = await response.json();
-        if (!response.ok) {
-          const error = (data && data.message) || response.statusText;
-          return Promise.reject(error);
-        }
-        console.log(data);
-        data.map((item) => addToList(item));
-      })
-      .catch((error) => {
-        setErrorState(error.toString());
-        console.error('There was an error!', error);
-      });
-  }, []);
-
+  // Change input values to clicked book's values
   const handleClick = (e) => {
-    console.log(e.target);
-    // handleBookClick()
-    // disableButtons(false)
+    const clickedBook = list.find((item) => {
+      return item.id === Number(e.target.id);
+    });
+    handleBookClick(
+      clickedBook.title,
+      clickedBook.author,
+      clickedBook.description
+    );
+    disableButtons(false);
   };
 
   const bookList = list.map((book) => (
-    <li key={book.id} onClick={() => handleClick}>
-      <p>Title: {book.title}</p>
-      <p>Author: {book.author}</p>
+    <li key={book.id} id={book.id} onClick={handleClick}>
+      Title: {book.title}
+      Author: {book.author}
     </li>
   ));
 
@@ -47,7 +36,6 @@ const BookList = ({ disableButtons, handleBookClick, addToList }) => {
 BookList.propTypes = {
   disableButtons: PropTypes.func.isRequired,
   handleBookClick: PropTypes.func.isRequired,
-  addToList: PropTypes.func.isRequired,
 };
 
 export default BookList;
