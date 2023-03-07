@@ -30,11 +30,7 @@ const Form = ({ isDisabled, handleChange, handleChangeAll, addToList }) => {
           const error = (data && data.message) || response.statusText;
           return Promise.reject(error);
         }
-        addToList({
-          title: title,
-          author: author,
-          description: description,
-        });
+        addToList(data);
         handleChangeAll('', '', '');
       })
       .catch((error) => {
