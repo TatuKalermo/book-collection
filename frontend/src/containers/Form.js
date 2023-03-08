@@ -5,15 +5,21 @@ import PropTypes from 'prop-types';
 import { InputContext } from '../App.js';
 import './Form.css';
 
-const Form = ({ isDisabled, handleChange, handleChangeAll, addToList }) => {
-  const { title, author, description } = useContext(InputContext);
+const Form = ({
+  isDisabled,
+  handleChange,
+  handleChangeAll,
+  addToList,
+  removeFromList,
+  updateInList,
+}) => {
+  const { id, title, author, description } = useContext(InputContext);
   const [error, setError] = useState(null);
 
   // Submit functions
 
   const handleSaveNew = (event) => {
     event.preventDefault();
-    console.log('Save new', title);
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -31,25 +37,60 @@ const Form = ({ isDisabled, handleChange, handleChangeAll, addToList }) => {
           return Promise.reject(error);
         }
         addToList(data);
-        handleChangeAll('', '', '');
+        handleChangeAll(undefined, '', '', '');
       })
       .catch((error) => {
         setError(error.toString());
-        console.error('There was an error!', error);
+        console.error('There was an error when saving new!', error);
       });
   };
 
   const handleSave = (event) => {
     event.preventDefault();
-    console.log('Save', author);
-    event.target.reset();
+    const requestOptions = {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        title: title,
+        author: author,
+        description: description,
+      }),
+    };
+    fetch(`http://localhost:3001/books/${id}`, requestOptions)
+      .then(async (response) => {
+        const data = await response.json();
+        if (!response.ok) {
+          const error = (data && data.message) || response.statusText;
+          return Promise.reject(error);
+        }
+        updateInList(id, title, author, description);
+      })
+      .catch((error) => {
+        setError(error.toString());
+        console.error('There was an error when saving new!', error);
+      });
   };
 
   const handleDelete = (event) => {
     event.preventDefault();
-    console.log('Delete', description);
-    event.target.reset();
-    handleChangeAll('', '', '');
+    const requestOptions = {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+    };
+    fetch(`http://localhost:3001/books/${id}`, requestOptions)
+      .then(async (response) => {
+        const data = await response.json();
+        if (!response.ok) {
+          const error = (data && data.message) || response.statusText;
+          return Promise.reject(error);
+        }
+        removeFromList(id);
+        handleChangeAll(undefined, '', '', '');
+      })
+      .catch((error) => {
+        setError(error.toString());
+        console.error('There was an error when deleting!', error);
+      });
   };
 
   // Handlers for submit buttons to link ids with handler functions
@@ -104,6 +145,8 @@ Form.propTypes = {
   handleChange: PropTypes.func.isRequired,
   handleChangeAll: PropTypes.func.isRequired,
   addToList: PropTypes.func.isRequired,
+  removeFromList: PropTypes.func.isRequired,
+  updateInList: PropTypes.func.isRequired,
 };
 
 export default Form;

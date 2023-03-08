@@ -27,20 +27,23 @@ router.post('/', async (req, res) => {
 });
 
 // Update a single book
-router.put('/', async (req, res) => {
-  const book = await req.context.models.Book.update({
-    title: req.body.title,
-    author: req.body.author,
-    description: req.body.description,
-    collectionId: req.context.library.id,
-  });
+router.put('/:bookId', async (req, res) => {
+  const id = await req.context.models.Book.update(
+    {
+      title: req.body.title,
+      author: req.body.author,
+      description: req.body.description,
+      collectionId: req.context.library.id,
+    },
+    { where: { id: req.params.bookId } }
+  );
 
-  return res.send(book);
+  return res.send(id);
 });
 
 // Delete a book
 router.delete('/:bookId', async (req, res) => {
-  const result = await req.context.models.Book.destroy({
+  await req.context.models.Book.destroy({
     where: { id: req.params.bookId },
   });
 

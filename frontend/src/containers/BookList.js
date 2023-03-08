@@ -8,11 +8,11 @@ const BookList = ({ disableButtons, handleBookClick, errorState }) => {
 
   // Change input values to clicked book's values
   const handleClick = (e) => {
-    console.log(list);
     const clickedBook = list.find((item) => {
       return item.id === Number(e.target.id);
     });
     handleBookClick(
+      clickedBook.id,
       clickedBook.title,
       clickedBook.author,
       clickedBook.description

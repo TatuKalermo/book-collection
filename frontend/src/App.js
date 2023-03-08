@@ -4,6 +4,7 @@ import BookList from './containers/BookList';
 import Form from './containers/Form';
 
 export const InputContext = createContext({
+  id: undefined,
   title: '',
   author: '',
   description: '',
@@ -14,7 +15,8 @@ export const ListContext = createContext([]);
 function App() {
   // States
   const [disableButtons, setDisableButtons] = useState(true);
-  const [inputValue, setInputValue] = useState({
+  const [inputValues, setInputValues] = useState({
+    id: undefined,
     title: '',
     author: '',
     description: '',
@@ -46,26 +48,44 @@ function App() {
   // Handler functions
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setInputValue((prev) => ({
+    setInputValues((prev) => ({
       ...prev,
       [name]: value,
     }));
   };
-  const handleChangeAllInputs = (title, author, desc) => {
-    setInputValue((prev) => ({
+  const handleChangeAllInputs = (id, title, author, desc) => {
+    setInputValues((prev) => ({
       ...prev,
+      id: id,
       title: title,
       author: author,
       description: desc,
     }));
   };
   const addToList = (item) => {
-    console.log('addtoList: ', item);
     setList([...list, item]);
+  };
+  const removeFromList = (id) => {
+    setList(list.filter((book) => book.id !== id));
+  };
+  const updateInList = (id, title, author, desc) => {
+    const nextList = list.map((book) => {
+      if (book.id === id) {
+        return {
+          id: id,
+          title: title,
+          author: author,
+          description: desc,
+        };
+      } else {
+        return book;
+      }
+    });
+    setList(nextList);
   };
 
   return (
-    <InputContext.Provider value={inputValue}>
+    <InputContext.Provider value={inputValues}>
       <ListContext.Provider value={list}>
         <div className="App">
           <Form
@@ -73,6 +93,8 @@ function App() {
             handleChange={handleChange}
             handleChangeAll={handleChangeAllInputs}
             addToList={addToList}
+            removeFromList={removeFromList}
+            updateInList={updateInList}
           />
           <BookList
             disableButtons={setDisableButtons}
