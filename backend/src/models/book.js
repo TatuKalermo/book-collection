@@ -2,7 +2,7 @@ const getBookModel = (sequelize, { DataTypes }) => {
   const Book = sequelize.define('book', {
     title: {
       type: DataTypes.STRING,
-      unique: true,
+      unique: false,
       allowNull: false,
       validate: {
         notEmpty: true,
