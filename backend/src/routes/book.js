@@ -4,7 +4,9 @@ const router = Router();
 
 // Get all books
 router.get('/', async (req, res) => {
-  const books = await req.context.models.Book.findAll();
+  const books = await req.context.models.Book.findAll({
+    order: [['id', 'ASC']],
+  });
   return res.send(books);
 });
 

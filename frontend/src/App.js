@@ -33,6 +33,7 @@ function App() {
           const error = (data && data.message) || response.statusText;
           return Promise.reject(error);
         }
+        console.log(data);
         setList(
           data.map((item) => {
             return item;
