@@ -8,6 +8,6 @@
     "server-dependencies": "npm run install --prefix backend",
     "client-dependencies": "npm run install --prefix frontend",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "install-all": "concurrently \"npm run server-dependencies\" \"npm run client-dependencies\""
+    "setup": "concurrently \"npm run server-dependencies\" \"npm run client-dependencies\""
   }
 }
