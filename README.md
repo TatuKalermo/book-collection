@@ -18,5 +18,5 @@ Book collection app done with React, Node and PostgreSQL. Allows the user to sav
 
 Reach out to me if you have any questions!
 
-- Email [`tatukalermo@gmail.com`](tatukalermo@gmail.com)
+- Email [`tatukalermo@gmail.com`](mailto:tatukalermo@gmail.com)
 - Linkedin [`tatu-kalermo`](https://www.linkedin.com/in/tatu-kalermo-07079912a/)
