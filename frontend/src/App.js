@@ -23,6 +23,7 @@ function App() {
   });
   const [list, setList] = useState([]);
   const [errorState, setErrorState] = useState(null);
+  const [textareaHeight, setTextareaHeight] = useState(3);
 
   // Use effects
   useEffect(() => {
@@ -33,7 +34,6 @@ function App() {
           const error = (data && data.message) || response.statusText;
           return Promise.reject(error);
         }
-        console.log(data);
         setList(
           data.map((item) => {
             return item;
@@ -53,6 +53,18 @@ function App() {
       ...prev,
       [name]: value,
     }));
+    if (name === 'description') {
+      const height = e.target.scrollHeight;
+      const rowHeight = 15;
+      const trows = Math.ceil(height / rowHeight) - 1;
+      console.log('trows: ' + trows);
+      if (trows > textareaHeight) {
+        setTextareaHeight(trows);
+      }
+      if (trows < textareaHeight) {
+        setTextareaHeight(trows);
+      }
+    }
   };
   const handleChangeAllInputs = (id, title, author, desc) => {
     setInputValues((prev) => ({
@@ -96,6 +108,7 @@ function App() {
             addToList={addToList}
             removeFromList={removeFromList}
             updateInList={updateInList}
+            textareaHeight={textareaHeight}
           />
           <BookList
             disableButtons={setDisableButtons}

@@ -12,6 +12,7 @@ const Form = ({
   addToList,
   removeFromList,
   updateInList,
+  textareaHeight,
 }) => {
   const { id, title, author, description } = useContext(InputContext);
   const [error, setError] = useState(null);
@@ -127,6 +128,7 @@ const Form = ({
           name="description"
           textArea
           onChange={handleChange}
+          textareaHeight={textareaHeight}
         />
         <SimpleButton id="saveNew">Save New</SimpleButton>
         <SimpleButton id="save" disabled={isDisabled}>
@@ -147,6 +149,11 @@ Form.propTypes = {
   addToList: PropTypes.func.isRequired,
   removeFromList: PropTypes.func.isRequired,
   updateInList: PropTypes.func.isRequired,
+  textareaHeight: PropTypes.number,
+};
+
+Form.defaultProps = {
+  textareaHeight: 3,
 };
 
 export default Form;

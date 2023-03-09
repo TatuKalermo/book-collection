@@ -2,10 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './TextInput.scss';
 
-const TextInput = ({ label, name, value, onChange, textArea }) => {
+const TextInput = ({
+  label,
+  name,
+  value,
+  onChange,
+  textArea,
+  textareaHeight,
+}) => {
   return (
     <div className="form-group">
-      <label>
+      <label className="form-label">
         {label}
         {textArea ? (
           <textarea
@@ -13,6 +20,7 @@ const TextInput = ({ label, name, value, onChange, textArea }) => {
             name={name}
             value={value}
             onChange={onChange}
+            rows={textareaHeight}
           />
         ) : (
           <input
@@ -35,12 +43,14 @@ TextInput.propTypes = {
   value: PropTypes.string,
   textArea: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
+  textareaHeight: PropTypes.number,
 };
 
 TextInput.defaultProps = {
   name: '',
   value: '',
   textArea: false,
+  // textareaHeight: 3,
 };
 
 export default TextInput;
