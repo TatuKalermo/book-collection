@@ -3,7 +3,7 @@ import SimpleButton from '../components/Button';
 import TextInput from '../components/TextInput';
 import PropTypes from 'prop-types';
 import { InputContext } from '../App.js';
-import './Form.css';
+import './Form.scss';
 
 const Form = ({
   isDisabled,

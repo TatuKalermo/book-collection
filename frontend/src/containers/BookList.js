@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import './BookList.css';
+import './BookList.scss';
 import { ListContext } from '../App';
 
 const BookList = ({ disableButtons, handleBookClick, errorState }) => {
