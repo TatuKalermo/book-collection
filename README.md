@@ -8,6 +8,7 @@ Book collection app done with React, Node and PostgreSQL. Allows the user to sav
 - Have [Node](https://nodejs.org/en/) and [PostgreSQL](https://www.postgresql.org/) installed on your machine
 - Create your own database with PostgreSQL
 - Copy the `.env.template` and rename to `.env`
+- Fill in your Database credentials in `.env`
 - `cd book-collection`
 - Run `npm install`
 - Run `npm run dev`
