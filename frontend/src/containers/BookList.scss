@@ -1,3 +1,28 @@
 .book-list {
   width: 50%;
 }
+
+ul {
+  list-style-type: none;
+  padding-inline-start: 0;
+}
+
+h3 {
+  margin: 0;
+}
+
+.book-box {
+  min-height: 200px;
+  margin: 0.5rem;
+  border: 1px solid lightgray;
+  border-radius: 2px;
+  background-color: whitesmoke;
+}
+
+.booklist-item {
+  margin: 0.5rem 0.5rem 0.5rem 0.5rem;
+  padding: 0.5rem;
+  border: 1px solid lightgray;
+  border-radius: 2px;
+  cursor: pointer;
+}

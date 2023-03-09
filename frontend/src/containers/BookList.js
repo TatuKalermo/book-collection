@@ -1,10 +1,11 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import './BookList.scss';
 import { ListContext } from '../App';
 
 const BookList = ({ disableButtons, handleBookClick, errorState }) => {
   const list = useContext(ListContext);
+  const [activeId, setActiveId] = useState(undefined);
 
   // Change input values to clicked book's values
   const handleClick = (e) => {
@@ -18,18 +19,33 @@ const BookList = ({ disableButtons, handleBookClick, errorState }) => {
       clickedBook.description
     );
     disableButtons(false);
+    setActiveId(clickedBook.id);
   };
 
   const bookList = list.map((book) => (
-    <li key={book.id} id={book.id} onClick={handleClick}>
-      Title: {book.title}
-      Author: {book.author}
-    </li>
+    <div
+      key={book.id}
+      className="booklist-item"
+      id={book.id}
+      onClick={handleClick}
+      style={{
+        backgroundColor: book.id === activeId ? 'lightgreen' : '#c8c7c5',
+      }}
+    >
+      <li key={book.id} id={book.id} onClick={handleClick}>
+        <h3 key={book.id} id={book.id} onClick={handleClick}>
+          {book.title}
+        </h3>
+        Author: {book.author}
+      </li>
+    </div>
   ));
 
   return (
     <div className="book-list">
-      {!errorState ? <ul>{bookList}</ul> : <p>{errorState}</p>}
+      <div className="book-box">
+        {!errorState ? <ul>{bookList}</ul> : <p>{errorState}</p>}
+      </div>
     </div>
   );
 };
@@ -37,6 +53,7 @@ const BookList = ({ disableButtons, handleBookClick, errorState }) => {
 BookList.propTypes = {
   disableButtons: PropTypes.func.isRequired,
   handleBookClick: PropTypes.func.isRequired,
+  errorState: PropTypes.string,
 };
 
 export default BookList;

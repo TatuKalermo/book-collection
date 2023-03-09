@@ -130,13 +130,15 @@ const Form = ({
           onChange={handleChange}
           textareaHeight={textareaHeight}
         />
-        <SimpleButton id="saveNew">Save New</SimpleButton>
-        <SimpleButton id="save" disabled={isDisabled}>
-          Save
-        </SimpleButton>
-        <SimpleButton id="delete" disabled={isDisabled}>
-          Delete
-        </SimpleButton>
+        <div className="buttons">
+          <SimpleButton id="saveNew">Save New</SimpleButton>
+          <SimpleButton id="save" disabled={isDisabled}>
+            Save
+          </SimpleButton>
+          <SimpleButton id="delete" disabled={isDisabled}>
+            Delete
+          </SimpleButton>
+        </div>
       </form>
     </div>
   );

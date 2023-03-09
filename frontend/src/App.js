@@ -58,10 +58,7 @@ function App() {
       const rowHeight = 15;
       const trows = Math.ceil(height / rowHeight) - 1;
       console.log('trows: ' + trows);
-      if (trows > textareaHeight) {
-        setTextareaHeight(trows);
-      }
-      if (trows < textareaHeight) {
+      if (trows !== textareaHeight) {
         setTextareaHeight(trows);
       }
     }
