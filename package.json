@@ -5,6 +5,9 @@
   "scripts": {
     "server": "npm run start --prefix backend",
     "client": "npm run start --prefix frontend",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "server-dependencies": "npm install --prefix backend",
+    "client-dependencies": "npm install --prefix frontend",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "install": "concurrently \"npm run server-dependencies\" \"npm run client-dependencies\""
   }
 }
