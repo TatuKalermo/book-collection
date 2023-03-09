@@ -42,7 +42,7 @@ function App() {
       })
       .catch((error) => {
         setErrorState(error.toString());
-        console.error('There was an error!', error);
+        console.error('There was an error getting the books!', error);
       });
   }, []);
 

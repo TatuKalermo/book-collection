@@ -139,6 +139,7 @@ const Form = ({
             Delete
           </SimpleButton>
         </div>
+        <div className="error-text">{error && <p>{error}</p>}</div>
       </form>
     </div>
   );

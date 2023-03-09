@@ -36,7 +36,7 @@ const BookList = ({ disableButtons, handleBookClick, errorState }) => {
         <h3 key={book.id} id={book.id} onClick={handleClick}>
           {book.title}
         </h3>
-        Author: {book.author}
+        {book.author}
       </li>
     </div>
   ));
